@@ -1,1 +1,8 @@
-<div>hello</div>
+<div>
+    <!--https://github.com/angular/angular.js/issues/1375#issuecomment-23331700-->
+    <input type="file"
+           onchange="angular.element(this).scope().$ctrl.onFileAdded(this.files);
+                     angular.element(this).scope().$digest();">
+
+    <p>Uploading: {{$ctrl.progress}}%</p>
+</div>
