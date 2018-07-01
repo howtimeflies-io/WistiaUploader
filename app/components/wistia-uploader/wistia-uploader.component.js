@@ -46,6 +46,6 @@ function WistiaUploaderController($scope, wistiaService) {
 
 
 angular.module('wistiaUploaderModule').component('wistiaUploader', {
-    templateUrl: 'components/wistia-uploader/wistia-uploader.component.html',
+    templateUrl: 'app/components/wistia-uploader/wistia-uploader.component.html',
     controller: ['$scope', 'wistiaService', WistiaUploaderController]
 });
