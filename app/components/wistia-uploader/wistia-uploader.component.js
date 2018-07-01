@@ -1,5 +1,6 @@
 function WistiaUploaderController($scope, wistiaService) {
     var ctrl = this;
+
     ctrl.progress = NaN;
     ctrl.err = null;
     ctrl.videoHashedId = null;
@@ -13,6 +14,7 @@ function WistiaUploaderController($scope, wistiaService) {
             acceptFileTypes: acceptFileTypes,
             add: function (e, data) {
                 var file = data.files[0];
+
                 // the "acceptFileTypes" option seems not working, check it ourselves.
                 // https://stackoverflow.com/q/17451629/474231
                 if (!file || !acceptFileTypes.test(file.name)) {
@@ -35,7 +37,11 @@ function WistiaUploaderController($scope, wistiaService) {
 
             }
         })
-    }
+    };
+
+    ctrl.closeAlert = function () {
+        ctrl.err = null;
+    };
 }
 
 
