@@ -10,7 +10,11 @@ angular.module('wistiaUploaderModule').factory('wistiaService', ['$http', functi
 
         return $http.post(url, form, {
             transformRequest: angular.identity,
-            headers: {'Content-Type': 'multipart/form-data'},
+            // https://stackoverflow.com/a/44726531/474231
+            // It is important to set the content type header to undefined. Normally the $http service sets the content
+            // type to application/json. When the content type is undefined, the XHR API will automatically set the
+            // content type to multipart/form-data with the proper multi-part boundary.
+            headers: {'Content-Type': undefined},
             uploadEventHandlers: {
                 progress: function (e) {
                     if (e.lengthComputable && progressCallback) {
