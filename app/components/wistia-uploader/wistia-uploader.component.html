@@ -2,11 +2,13 @@
     <div class="alert alert-warning" ng-if="$ctrl.err">
         {{$ctrl.err}}
     </div>
-    <!--https://github.com/angular/angular.js/issues/1375#issuecomment-23331700-->
-    <input type="file"
-           onchange="angular.element(this).scope().$ctrl.onFileAdded(this.files);
-                     angular.element(this).scope().$digest();">
-
+    <div>
+        <!-- The fileinput-button span is used to style the file input field as button -->
+        <span class="btn btn-success fileinput-button">
+            <span>Upload Video</span>
+            <input type="file" name="files[]">
+        </span>
+    </div>
     <p>Uploading: {{$ctrl.progress}}%</p>
     <div ng-if="$ctrl.videoHashedId"
          class="wistia_embed wistia_async_{{$ctrl.videoHashedId}}"
