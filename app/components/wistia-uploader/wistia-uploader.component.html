@@ -1,8 +1,14 @@
 <div>
+    <div class="alert alert-warning" ng-if="$ctrl.err">
+        {{$ctrl.err}}
+    </div>
     <!--https://github.com/angular/angular.js/issues/1375#issuecomment-23331700-->
     <input type="file"
            onchange="angular.element(this).scope().$ctrl.onFileAdded(this.files);
                      angular.element(this).scope().$digest();">
 
     <p>Uploading: {{$ctrl.progress}}%</p>
+    <div ng-if="$ctrl.videoHashedId"
+         class="wistia_embed wistia_async_{{$ctrl.videoHashedId}}"
+         style="width:640px;height:360px;"></div>
 </div>

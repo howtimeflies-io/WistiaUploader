@@ -2,17 +2,21 @@ function WistiaUploaderController(wistiaService) {
     var ctrl = this;
     ctrl.progress = NaN;
     ctrl.err = null;
+    ctrl.videoHashedId = null;
 
     ctrl.onFileAdded = function (files) {
         var file = files[0];
         wistiaService.uploadFile(file, function (e) {
             ctrl.progress = Math.floor(e.loaded / e.total * 100);
         }).then(function (res) {
-            console.log(res);
-        }, function (err, status) {
-            console.log(err);
-            // 502 (Bad Gateway) {data: null, status: -1, headers: ƒ, config: {…}, statusText: "", …}
-            ctrl.err = (err.data || {error: 'Unknown error with status: ' + err.status}).error;
+            // {data: {hashed_id: "2uxmpksi7r"}}
+            ctrl.videoHashedId = res.data.hashed_id;
+            ctrl.progress = NaN;
+            ctrl.err = null;
+        }, function (err) {
+            // {data: {error: "This account has exceeded its video limit..."}}
+            ctrl.err = 'Wistia: ' + err.error;
+            ctrl.progress = NaN;
         });
     }
 }
