@@ -1,1 +1,1 @@
-angular.module('myApp', ['wistiaUploaderModule'])
+angular.module('myApp', ['wistiaUploaderModule']);

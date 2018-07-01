@@ -1,0 +1,14 @@
+{
+  "plugins": ["angular", "jasmine"],
+  "env": {
+    "jasmine": true
+  },
+  "extends": ["eslint:recommended", "plugin:es5/no-es2015", "plugin:angular/johnpapa", "plugin:jasmine/recommended"],
+  "globals": {
+    "angular": true
+  },
+  "rules": {
+    "semi": [2, "always"],
+    "angular/file-name": [0]
+  }
+}

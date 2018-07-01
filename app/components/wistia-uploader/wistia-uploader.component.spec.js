@@ -1,3 +1,5 @@
+/* global module, inject */
+
 describe('Wistia Uploader Component', function () {
     var ctrl, mockedWistiaService, mockedFileUpload, mockedUploadPromise;
 
@@ -9,23 +11,23 @@ describe('Wistia Uploader Component', function () {
             },
             data: function () {
             }
-        }
+        };
         spyOn(angular, 'element').and.returnValue(mockedFileUpload);
 
         mockedUploadPromise = {
             then: function () {
             }
-        }
+        };
         mockedWistiaService = {
             uploadFile: function () {
                 return mockedUploadPromise;
             }
-        }
+        };
 
         ctrl = _$componentController_('wistiaUploader', {
             $scope: $rootScope.$new(),
             wistiaService: mockedWistiaService
-        })
+        });
     }));
 
     it('should init the jQuery File Upload Plugin', function () {
@@ -38,10 +40,12 @@ describe('Wistia Uploader Component', function () {
     it('should alert when adding a non-video file', function () {
         spyOn(mockedFileUpload, 'fileupload').and.callThrough();
         ctrl.$onInit();
+
         expect(ctrl.err).toBeNull();
 
         var fnAdd = mockedFileUpload.fileupload.calls.mostRecent().args[0].add;
         fnAdd(null, {files: [{name: 'test.txt'}]});
+
         expect(ctrl.err).toEqual('Please pick a video file to upload.');
     });
 
@@ -52,6 +56,7 @@ describe('Wistia Uploader Component', function () {
 
         var fnAdd = mockedFileUpload.fileupload.calls.mostRecent().args[0].add;
         fnAdd(null, {files: [{name: 'video.mp4'}]});
+
         expect(ctrl.err).toBeNull();
         expect(mockedWistiaService.uploadFile).toHaveBeenCalledTimes(1);
     });
@@ -66,6 +71,7 @@ describe('Wistia Uploader Component', function () {
 
         var fnUpdate = mockedWistiaService.uploadFile.calls.mostRecent().args[1];
         fnUpdate({loaded: 20, total: 100});
+
         expect(ctrl.progress).toEqual(20);
     });
 
@@ -107,6 +113,7 @@ describe('Wistia Uploader Component', function () {
     it('should close the alert', function () {
         ctrl.err = 'error';
         ctrl.closeAlert();
+
         expect(ctrl.err).toBeNull();
     });
 });

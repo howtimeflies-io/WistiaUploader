@@ -1,3 +1,5 @@
+/* global module, inject */
+
 describe('Wistia Service', function () {
     var wistiaService, httpBackend, http;
 
