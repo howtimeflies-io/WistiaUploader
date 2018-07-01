@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
+  "name": "WistiaUploader",
   "private": true,
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "description": "An AngularJS 1.x component that wraps the Wistia uploader.",
+  "repository": "https://github.com/howtimeflies-io/WistiaUploader",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.7.7",
@@ -22,10 +22,8 @@
     "update-deps": "npm update",
     "postupdate-deps": "bower update",
 
-    "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 -c-1 ./app",
 
-    "pretest": "npm install",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run",
 

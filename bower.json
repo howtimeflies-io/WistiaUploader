@@ -1,15 +1,15 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
+  "name": "wistia-uploader",
+  "description": "An AngularJS 1.x component that wraps the Wistia uploader.",
   "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "homepage": "https://github.com/howtimeflies-io/WistiaUploader",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "~1.5.0",
-    "angular-route": "~1.5.0",
-    "angular-loader": "~1.5.0",
-    "angular-mocks": "~1.5.0",
+    "angular": "~1.7.2",
+    "angular-route": "~1.7.2",
+    "angular-loader": "~1.7.2",
+    "angular-mocks": "~1.7.2",
     "html5-boilerplate": "^5.3.0"
   }
 }
