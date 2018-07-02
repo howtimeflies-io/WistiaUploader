@@ -1,4 +1,4 @@
-<div class="wistia-uploader card mx-auto p-1 my-1">
+<div class="wistia-uploader card mx-auto p-1 my-1" ng-style="{'width': $ctrl.width + 'px'}">
     <div class="alert alert-warning" ng-if="$ctrl.err" role="alert">
         {{$ctrl.err}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="$ctrl.closeAlert()">
@@ -18,13 +18,11 @@
              style="width: {{$ctrl.progress}}%">Uploading: {{$ctrl.progress}}%</div>
     </div>
 
-    <!--TODO: the player should keep the fixed size 640x360-->
     <div class="wistia-player mt-1 w-100">
         <div ng-if="$ctrl.videoHashedId"
-             class="wistia_embed wistia_async_{{$ctrl.videoHashedId}}">
-        </div>
-        <div ng-hide="$ctrl.videoHashedId"
-             class="wistia-embed-placeholder border rounded">
+             ng-style="{'height': $ctrl.height + 'px'}"
+             class="wistia_embed wistia_async_{{$ctrl.videoHashedId}}"></div>
+        <div ng-hide="$ctrl.videoHashedId" ng-style="{'height': $ctrl.height + 'px'}" class="border rounded">
             <p class="text-center text-info">A Wistia player would be shown here after uploading a video file.</p>
         </div>
     </div>

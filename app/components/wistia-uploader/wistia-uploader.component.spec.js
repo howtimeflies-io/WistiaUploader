@@ -1,11 +1,13 @@
 /* global module, inject */
 
 describe('Wistia Uploader Component', function () {
-    var ctrl, mockedWistiaService, mockedFileUpload, mockedUploadPromise;
+    var ctrl, mockedWistiaService, mockedFileUpload, mockedUploadPromise, theWindow;
 
     beforeEach(module("wistiaUploaderModule"));
 
-    beforeEach(inject(function (_$componentController_, $rootScope) {
+    beforeEach(inject(function (_$componentController_, $rootScope, $window) {
+        theWindow = $window;
+
         mockedFileUpload = {
             fileupload: function () {
             },
@@ -26,6 +28,7 @@ describe('Wistia Uploader Component', function () {
 
         ctrl = _$componentController_('wistiaUploader', {
             $scope: $rootScope.$new(),
+            $window: $window,
             wistiaService: mockedWistiaService
         });
     }));
@@ -75,22 +78,43 @@ describe('Wistia Uploader Component', function () {
         expect(ctrl.progress).toEqual(20);
     });
 
-    it('should set the video hashed id on upload success', function () {
-        spyOn(mockedFileUpload, 'fileupload').and.callThrough();
-        spyOn(mockedUploadPromise, 'then').and.callThrough();
+    function uploadVideoSuccess() {
+        spyOn(mockedFileUpload, 'fileupload').and.callThrough(); // eslint-disable-line jasmine/no-unsafe-spy
+        spyOn(mockedUploadPromise, 'then').and.callThrough(); // eslint-disable-line jasmine/no-unsafe-spy
         ctrl.$onInit();
 
         var fnAdd = mockedFileUpload.fileupload.calls.mostRecent().args[0].add;
         fnAdd(null, {files: [{name: 'video.mp4'}]});
 
         var fnSuccess = mockedUploadPromise.then.calls.mostRecent().args[0];
-
-        expect(ctrl.videoHashedId).toBeNull();
         fnSuccess({data: {hashed_id: 'abc'}});
+    }
+
+    it('should set the video hashed id on upload success', function () {
+        expect(ctrl.videoHashedId).toBeNull();
+        uploadVideoSuccess();
 
         expect(ctrl.videoHashedId).toEqual('abc');
         expect(ctrl.progress).toBeNaN();
         expect(ctrl.err).toBeNull();
+    });
+
+    it('should keep the video player size on video ready', function () {
+        theWindow._wq = [];
+        uploadVideoSuccess();
+
+        expect(theWindow._wq.length).toEqual(1);
+        expect(theWindow._wq[0].id).toEqual('abc');
+
+        var video = {
+            h: NaN,
+            height: function (h) {
+                this.h = h;
+            }
+        };
+        theWindow._wq[0].onReady(video);
+
+        expect(video.h).toEqual(ctrl.height);
     });
 
     it('should alert the error message on upload failure', function () {

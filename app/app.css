@@ -1,12 +1,4 @@
 /* app css stylesheet */
-.wistia-uploader {
-    width: 640px;
-}
-
-.wistia-player, .wistia_embed, .wistia-embed-placeholder {
-    height: 360px!important;
-}
-
 .fileinput-button {
     position: relative;
     overflow: hidden;

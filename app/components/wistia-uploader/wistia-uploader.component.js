@@ -1,5 +1,8 @@
-function WistiaUploaderController($scope, wistiaService) {
+function WistiaUploaderController($scope, $window, wistiaService) {
     var ctrl = this;
+
+    ctrl.width = 640;
+    ctrl.height = 360;
 
     ctrl.progress = NaN;
     ctrl.err = null;
@@ -28,6 +31,7 @@ function WistiaUploaderController($scope, wistiaService) {
                         ctrl.videoHashedId = res.data.hashed_id;
                         ctrl.progress = NaN;
                         ctrl.err = null;
+                        keepVideoPlayerSize();
                     }, function (err) {
                         // {data: {error: "This account has exceeded its video limit..."}}
                         ctrl.err = 'Wistia: ' + err.data.error;
@@ -39,6 +43,13 @@ function WistiaUploaderController($scope, wistiaService) {
         });
     };
 
+    function keepVideoPlayerSize() {
+        // https://wistia.com/support/developers/player-api
+        ($window._wq || []).push({ id: ctrl.videoHashedId, onReady: function(video) {
+            video.height(ctrl.height);
+        }});
+    }
+
     ctrl.closeAlert = function () {
         ctrl.err = null;
     };
@@ -47,5 +58,9 @@ function WistiaUploaderController($scope, wistiaService) {
 
 angular.module('wistiaUploaderModule').component('wistiaUploader', {
     templateUrl: 'app/components/wistia-uploader/wistia-uploader.component.html',
-    controller: ['$scope', 'wistiaService', WistiaUploaderController]
+    controller: ['$scope', '$window', 'wistiaService', WistiaUploaderController],
+    bindings: {
+        width: '<',
+        height: '<'
+    }
 });
